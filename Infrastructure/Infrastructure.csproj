@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExRam.Gremlinq.Core" Version="8.5.0" />
+    <PackageReference Include="ExRam.Gremlinq.Providers.CosmosDb" Version="8.5.0" />
+    <PackageReference Include="ExRam.Gremlinq.Providers.CosmosDb.AspNet" Version="8.5.0" />
+    <PackageReference Include="ExRam.Gremlinq.Providers.GremlinServer" Version="8.5.0" />
+    <PackageReference Include="ExRam.Gremlinq.Providers.GremlinServer.AspNet" Version="8.5.0" />
     <PackageReference Include="Gremlin.Net" Version="3.4.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

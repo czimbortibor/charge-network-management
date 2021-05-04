@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.WebSockets;
+using ExRam.Gremlinq.Core.AspNet;
+using Domain.Entities;
 
 namespace Infrastructure
 {
@@ -39,7 +41,10 @@ namespace Infrastructure
                                     connectionPoolSettings,
                                     webSocketConfiguration);
 
-            services.AddSingleton(gremlinClient);
+            services.AddSingleton<IGremlinClient>(gremlinClient);
+
+
+            services.AddGremlinq(x => x.UseCosmosDb<Vertex, Edge>(x => x.PartitionKey));
 
             return services;
         }

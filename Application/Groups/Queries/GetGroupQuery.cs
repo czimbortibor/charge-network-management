@@ -1,4 +1,6 @@
 ﻿using Application.Groups.Models;
+using ExRam.Gremlinq.Core;
+using Gremlin.Net.Driver;
 using MediatR;
 using System;
 using System.Threading;
@@ -19,14 +21,21 @@ namespace Application.Groups.Queries
 
     public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupDto>
     {
-        public GetGroupQueryHandler()
-        {
+        private readonly IGremlinClient _gremlinClient;
+        private readonly IGremlinQuerySource _gremlinSource;
 
+        public GetGroupQueryHandler(IGremlinClient gremlinClient, IGremlinQuerySource gremlinSource)
+        {
+            _gremlinClient = gremlinClient;
+            _gremlinSource = gremlinSource;
         }
 
-        public Task<GroupDto> Handle(GetGroupQuery request, CancellationToken cancellationToken)
+        public async Task<GroupDto> Handle(GetGroupQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await _gremlinSource.V($"{request.Id}");
+            //var result = _gremlinClient.SubmitAsync($"g.V('{request.Id}')");
+            
+            return null;
         }
     }
 }
