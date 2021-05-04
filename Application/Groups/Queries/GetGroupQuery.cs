@@ -1,4 +1,5 @@
-﻿using Application.Groups.Models;
+﻿using Application.Common;
+using Application.Groups.Models;
 using AutoMapper;
 using MediatR;
 using System;
@@ -17,13 +18,14 @@ namespace Application.Groups.Queries
         public Guid Id { get; set; }
     }
 
-
     public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupDto>
     {
+        private readonly IChargeNetworkDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetGroupQueryHandler(IMapper mapper)
+        public GetGroupQueryHandler(IChargeNetworkDbContext dbContext, IMapper mapper)
         {
+            _dbContext = dbContext;
             _mapper = mapper;
         }
 

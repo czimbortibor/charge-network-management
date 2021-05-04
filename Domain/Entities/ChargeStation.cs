@@ -9,6 +9,9 @@ namespace Domain.Entities
 
         public string Name { get; set; }
 
+        public Guid GroupId { get; set; }
+        public Group Group { get; set; }
+
 
         public ICollection<Connector> Connectors { get; set; }
     }

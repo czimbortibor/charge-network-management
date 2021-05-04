@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Gremlin.Net.Driver;
+﻿using Application.Common;
+using AutoMapper;
 using MediatR;
 using System;
 using System.Threading;
@@ -16,26 +16,17 @@ namespace Application.Groups.Commands
 
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Guid>
     {
-        private readonly GremlinClient _gremlinClient;
+        private readonly IChargeNetworkDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CreateGroupCommandHandler(GremlinClient gremlinClient, IMapper mapper)
+        public CreateGroupCommandHandler(IChargeNetworkDbContext dbContext, IMapper mapper)
         {
-            _gremlinClient = gremlinClient;
+            _dbContext = dbContext;
             _mapper = mapper;
         }
 
         public async Task<Guid> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var result = await _gremlinClient.SubmitAsync<object>("g.V().count()");
-            }
-            catch (Exception ex)
-            {
-
-            }
-
             throw new NotImplementedException();
         }
     }
