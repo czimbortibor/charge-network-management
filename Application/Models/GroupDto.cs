@@ -2,8 +2,9 @@
 using AutoMapper;
 using Domain.Entities;
 using System;
+using System.Collections.Generic;
 
-namespace Application.Groups.Models
+namespace Application.Models
 {
     public class GroupDto : IMapFrom<Group>
     {
@@ -13,10 +14,13 @@ namespace Application.Groups.Models
 
         public int CapacityInAmps { get; set; }
 
+        public IEnumerable<ChargeStationDto> ChargeStations { get; set; }
+
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Group, GroupDto>();
+            profile.CreateMap<Group, GroupDto>()
+                   .ForMember(x => x.ChargeStations, opt => opt.MapFrom(source => source.ChargeStations));
         }
     }
 }

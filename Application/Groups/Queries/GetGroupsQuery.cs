@@ -4,23 +4,28 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Groups.Queries
 {
-    public class GetGroupsQuery : IRequest<IEnumerable<GroupDto>>
+    public class GetGroupQuery : IRequest<GroupDto>
     {
+        public GetGroupQuery(Guid id)
+        {
+            Id = id;
+        }
+
+        public Guid Id { get; set; }
     }
 
-    public class GetGroupsQueryHandler : IRequestHandler<GetGroupsQuery, IEnumerable<GroupDto>>
+    public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupDto>
     {
         private readonly IChargeNetworkDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetGroupsQueryHandler(IChargeNetworkDbContext dbContext, IMapper mapper)
+        public GetGroupQueryHandler(IChargeNetworkDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -35,22 +40,13 @@ namespace Application.Groups.Queries
             GroupDto result = null;
             try
             {
-                result = await projection.SingleOrDefaultAsync(cancellationToken);
+                result = await projection.SingleOrDefaultAsync();
             }
             catch (Exception ex)
             {
                 // ignore for now
             }
 
-
-            return result;
-        }
-
-        public async Task<IEnumerable<GroupDto>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
-        {
-
-            var result = await _mapper.ProjectTo<GroupDto>(_dbContext.Group)
-                                        .ToListAsync(cancellationToken);
 
             return result;
         }

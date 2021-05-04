@@ -24,5 +24,13 @@ namespace WebApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet, Route("dump-db")]
+        public async Task<ActionResult<GetGroupQuery>> GetGroups()
+        {
+            var result = await Mediator.Send(new GetGroupsQuery());
+
+            return Ok(result);
+        }
     }
 }
