@@ -1,4 +1,5 @@
-﻿using Gremlin.Net.Driver;
+﻿using AutoMapper;
+using Gremlin.Net.Driver;
 using MediatR;
 using System;
 using System.Threading;
@@ -16,10 +17,12 @@ namespace Application.Groups.Commands
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Guid>
     {
         private readonly GremlinClient _gremlinClient;
+        private readonly IMapper _mapper;
 
-        public CreateGroupCommandHandler(GremlinClient gremlinClient)
+        public CreateGroupCommandHandler(GremlinClient gremlinClient, IMapper mapper)
         {
             _gremlinClient = gremlinClient;
+            _mapper = mapper;
         }
 
         public async Task<Guid> Handle(CreateGroupCommand request, CancellationToken cancellationToken)

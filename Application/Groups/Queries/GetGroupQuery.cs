@@ -1,4 +1,5 @@
 ﻿using Application.Groups.Models;
+using AutoMapper;
 using MediatR;
 using System;
 using System.Threading;
@@ -19,9 +20,11 @@ namespace Application.Groups.Queries
 
     public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupDto>
     {
-        public GetGroupQueryHandler()
-        {
+        private readonly IMapper _mapper;
 
+        public GetGroupQueryHandler(IMapper mapper)
+        {
+            _mapper = mapper;
         }
 
         public Task<GroupDto> Handle(GetGroupQuery request, CancellationToken cancellationToken)
