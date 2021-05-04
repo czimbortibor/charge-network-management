@@ -18,11 +18,11 @@ namespace Infrastructure.Persistence
         {
         }
 
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Group> Group { get; set; }
         
-        public DbSet<ChargeStation> ChargeStations { get; set; }
+        public DbSet<ChargeStation> ChargeStation { get; set; }
 
-        public DbSet<Connector> Connectors { get; set; }
+        public DbSet<Connector> Connector { get; set; }
 
         public async Task BeginTransactionAsync()
         {

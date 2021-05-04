@@ -2,7 +2,9 @@
 using Application.Groups.Models;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,9 +31,24 @@ namespace Application.Groups.Queries
             _mapper = mapper;
         }
 
-        public Task<GroupDto> Handle(GetGroupQuery request, CancellationToken cancellationToken)
+        public async Task<GroupDto> Handle(GetGroupQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var query = _dbContext.Group.Where(x => x.Id == request.Id);
+
+            var projection = _mapper.ProjectTo<GroupDto>(query);
+
+            GroupDto result = null;
+            try
+            {
+                result = await projection.SingleOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                // ignore for now
+            }
+
+
+            return result;
         }
     }
 }

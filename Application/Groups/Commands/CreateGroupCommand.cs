@@ -1,5 +1,5 @@
 ﻿using Application.Common;
-using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using System;
 using System.Threading;
@@ -17,17 +17,24 @@ namespace Application.Groups.Commands
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Guid>
     {
         private readonly IChargeNetworkDbContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public CreateGroupCommandHandler(IChargeNetworkDbContext dbContext, IMapper mapper)
+        public CreateGroupCommandHandler(IChargeNetworkDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         public async Task<Guid> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var group = new Group
+            {
+                Name = request.Name,
+                CapacityInAmps = request.CapacityInAmps
+            };
+
+            await _dbContext.Group.AddAsync(group, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return group.Id;
         }
     }
 }
