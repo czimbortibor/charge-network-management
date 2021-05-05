@@ -25,11 +25,7 @@ namespace Application.Groups.Commands
 
         public async Task<Guid> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
-            var group = new Group
-            {
-                Name = request.Name,
-                CapacityInAmps = request.CapacityInAmps
-            };
+            var group = new Group(request.Name, request.CapacityInAmps);
 
             await _dbContext.Group.AddAsync(group, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);

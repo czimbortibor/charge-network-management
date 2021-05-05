@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Application.Common;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -16,7 +17,8 @@ namespace WebApi.Filters
         {
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
-                { typeof(ValidationException), HandleValidationException }
+                { typeof(ValidationException), HandleValidationException },
+                { typeof(SpecificationException), HandleSpecificationException }
             };
         }
 
@@ -66,6 +68,15 @@ namespace WebApi.Filters
             };
 
             context.Result = new BadRequestObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleSpecificationException(ExceptionContext context)
+        {
+            var exception = context.Exception as SpecificationException;
+
+            context.Result = new UnprocessableEntityObjectResult(exception.Message);
 
             context.ExceptionHandled = true;
         }

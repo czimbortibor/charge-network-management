@@ -32,5 +32,13 @@ namespace WebApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpPatch, Route("")]
+        public async Task<ActionResult<Guid>> UpdateGroup(UpdateGroupCommand request)
+        {
+            await Mediator.Send(request);
+
+            return NoContent();
+        }
     }
 }

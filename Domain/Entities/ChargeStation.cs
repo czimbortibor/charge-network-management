@@ -12,7 +12,6 @@ namespace Domain.Entities
         public Guid GroupId { get; set; }
         public Group Group { get; set; }
 
-
         public ICollection<Connector> Connectors { get; set; }
     }
 }
