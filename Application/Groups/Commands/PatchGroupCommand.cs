@@ -8,25 +8,32 @@ using System.Threading.Tasks;
 
 namespace Application.Groups.Commands
 {
-    public class UpdateGroupCommand : IRequest
+    public class PatchGroupCommand : IRequest
     {
         public Guid Id { get; set; }
         
         public string Name { get; set; }
 
         public int CapacityInAmps { get; set; }
+
+        public PatchGroupCommand(Guid id, string name, int capacityInAmps)
+        {
+            Id = id;
+            Name = name;
+            CapacityInAmps = capacityInAmps;
+        }
     }
 
-    public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand>
+    public class PatchGroupCommandHandler : IRequestHandler<PatchGroupCommand>
     {
         private readonly IChargeNetworkDbContext _dbContext;
 
-        public UpdateGroupCommandHandler(IChargeNetworkDbContext dbContext)
+        public PatchGroupCommandHandler(IChargeNetworkDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<Unit> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(PatchGroupCommand request, CancellationToken cancellationToken)
         {
             var group = await _dbContext.Group.SingleOrDefaultAsync(x => x.Id == request.Id);
             if (group == null)

@@ -27,7 +27,8 @@ namespace Application.Groups.Commands
         {
             var group = new Group(request.Name, request.CapacityInAmps);
 
-            await _dbContext.Group.AddAsync(group, cancellationToken);
+            _dbContext.Group.Add(group);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return group.Id;

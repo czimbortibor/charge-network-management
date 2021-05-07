@@ -1,5 +1,6 @@
 ﻿using Application.Groups.Commands;
 using Application.Groups.Queries;
+using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -33,10 +34,10 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPatch, Route("")]
-        public async Task<ActionResult<Guid>> UpdateGroup(UpdateGroupCommand request)
+        [HttpPatch, Route("{id}")]
+        public async Task<ActionResult<Guid>> PatchGroup([FromRoute] Guid id, [FromBody] PatchGroupModel patchModel)
         {
-            await Mediator.Send(request);
+            await Mediator.Send(new PatchGroupCommand(id, patchModel.Name, patchModel.CapacityInAmps));
 
             return NoContent();
         }

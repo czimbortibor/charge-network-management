@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Groups.Validators
 {
-    public class UpdateGroupCommandValidator : AbstractValidator<UpdateGroupCommand>
+    public class PatchGroupCommandValidator : AbstractValidator<PatchGroupCommand>
     {
-        public UpdateGroupCommandValidator()
+        public PatchGroupCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.CapacityInAmps).GreaterThan(0);
