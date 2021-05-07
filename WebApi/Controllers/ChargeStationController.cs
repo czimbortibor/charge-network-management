@@ -17,5 +17,13 @@ namespace WebApi.Controllers
             // TODO should have a different status code when the request couldnt be completed
             return Ok(result);
         }
+
+        [HttpDelete, Route("{chargeStationId}")]
+        public async Task<ActionResult> DeleteChargeStation(Guid chargeStationId)
+        {
+            await Mediator.Send(new DeleteChargeStationCommand(chargeStationId));
+
+            return NoContent();
+        }
     }
 }
